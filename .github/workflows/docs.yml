@@ -33,18 +33,23 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install sphinx sphinx_rtd_theme
-        # Add any other dependencies your code needs
-        pip install pandas google-cloud-bigquery  # Add whatever packages your src.utils needs
+        pip install pandas google-cloud-bigquery
+
+    - name: Prepare source code
+      run: |
+        # Create the correct directory structure
+        mkdir -p workspace/cryptohouse
+        cp -r cryptohouse/* workspace/cryptohouse/
+        cp -r cryptorick/* workspace/
 
     - name: Build documentation
       run: |
-        cd cryptorick/docs
-        # Add both the source code directory and its parent to PYTHONPATH
-        export PYTHONPATH=$PYTHONPATH:${GITHUB_WORKSPACE}/cryptohouse:${GITHUB_WORKSPACE}/cryptohouse/src
+        cd workspace/docs
+        ls -la ../../  # Debug: show directory contents
         make html
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./cryptorick/docs/_build/html
+        publish_dir: ./workspace/docs/_build/html
