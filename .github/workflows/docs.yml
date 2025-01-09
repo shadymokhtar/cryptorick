@@ -19,7 +19,7 @@ jobs:
     - name: Checkout source repo
       uses: actions/checkout@v2
       with:
-        repository: shadymokhtar/cryptohouse
+        repository: yourusername/cryptohouse
         ref: dev
         token: ${{ secrets.PAT_TOKEN }}
         path: cryptohouse
@@ -33,15 +33,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install sphinx sphinx_rtd_theme
-        cd cryptohouse
-        pip install -e .
-        # If you have requirements.txt:
-        # pip install -r requirements.txt
+        # Add any other dependencies your code needs
+        pip install pandas google-cloud-bigquery  # Add whatever packages your src.utils needs
 
     - name: Build documentation
       run: |
         cd cryptorick/docs
-        export PYTHONPATH=$PYTHONPATH:${GITHUB_WORKSPACE}/cryptohouse
+        # Add both the source code directory and its parent to PYTHONPATH
+        export PYTHONPATH=$PYTHONPATH:${GITHUB_WORKSPACE}/cryptohouse:${GITHUB_WORKSPACE}/cryptohouse/src
         make html
 
     - name: Deploy
