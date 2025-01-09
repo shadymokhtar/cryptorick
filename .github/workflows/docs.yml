@@ -30,26 +30,14 @@ jobs:
           path: cryptohouse
           token: ${{ secrets.PAT_TOKEN }}
 
-      - name: List directories (debug)
-        run: |
-          echo "Current directory structure:"
-          ls -R
-
-      - name: Create directories and copy docs
-        run: |
-          mkdir -p docs/build/html
-          echo "Copying from cryptohouse/docs/build/html to docs/build/html"
-          cp -r cryptohouse/docs/build/html/* docs/build/html/
-          echo "Content of destination directory:"
-          ls -la docs/build/html/
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'docs/build/html'
+          path: 'cryptohouse/docs/build/html'
+          name: github-pages
 
       - name: Deploy to GitHub Pages
         id: deployment
