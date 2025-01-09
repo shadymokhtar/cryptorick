@@ -19,7 +19,7 @@ jobs:
     - name: Checkout source repo
       uses: actions/checkout@v2
       with:
-        repository: yourusername/cryptohouse
+        repository: shadymokhtar/cryptohouse
         ref: dev
         token: ${{ secrets.PAT_TOKEN }}
         path: cryptohouse
