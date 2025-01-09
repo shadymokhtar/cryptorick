@@ -28,7 +28,7 @@ jobs:
           repository: shadymokhtar/cryptohouse
           ref: dev
           path: cryptohouse
-          token: ${{ github.token }}
+          token: ${{ secrets.GH_PAT }}
 
       - name: Copy docs
         run: |
