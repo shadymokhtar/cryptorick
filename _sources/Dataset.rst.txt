@@ -1,0 +1,22 @@
+Dataset Documentation
+===================
+
+This section describes the dataset-related utilities and functions.
+
+Function Reference
+----------------
+
+.. automodule:: src.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Detailed Examples
+---------------
+
+Here are some detailed examples of how to use the dataset functions:
+
+Using process_dataset
+~~~~~~~~~~~~~~~~~~
+
+.. autofunction:: src.utils.process_dataset
