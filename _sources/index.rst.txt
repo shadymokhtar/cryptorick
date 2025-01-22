@@ -50,7 +50,8 @@ Core Functions
       --infer \
       --trading_exchange_data_name kucoin \
       --trading_exchange_name kucoinfutures \
-      --api_name kucoin
+      --api_name kucoin \
+      --strategy_name template_lgbm_strategy_binance
 
 * **Rebalancing**
    Dir: :file:`src/pipelines/rebalance/`
@@ -58,15 +59,17 @@ Core Functions
    .. code-block:: bash
 
       python3 -m src.pipelines.rebalance.rebalance_daily \
+      --execute \
       --trading_exchange_name kucoinfutures \
       --trading_exchange_data_name kucoin \
       --api_name kucoin_prod
+      --strategies "strategy_1 strategy_2 strategy_3"
 
 
 Quick Start
 -----------
 
-1. Fetch researcher's github branch
+1. git clone https://github.com/shadymokhtar/cryptohouse.git
 
 2. Edit config file if needed: :file:`src/config/__init__.py`
 

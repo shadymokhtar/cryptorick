@@ -41,9 +41,11 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../config.html">Config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../dataset.html">Datasets and Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../strategy.html">Strategy Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deploy.html">Deploy Jobs</a></li>
 </ul>
 
         </div>
@@ -82,10 +84,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">deepmerge</span><span class="w"> </span><span class="kn">import</span> <span class="n">Merger</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">CREDENTIALS</span><span class="p">,</span> <span class="n">BQ_CLIENT</span><span class="p">,</span> <span class="n">PROJECT_ID</span><span class="p">,</span> <span class="n">DATASET_ID</span><span class="p">,</span> <span class="n">PREDICTIONS_TABLE_REF</span><span class="p">,</span> <span class="n">BACKTEST_TABLE_REF</span><span class="p">,</span> <span class="n">FEAST_STORE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">CREDENTIALS</span><span class="p">,</span> <span class="n">BQ_CLIENT</span><span class="p">,</span> <span class="n">PROJECT_ID</span><span class="p">,</span> <span class="n">DATASET_ID</span><span class="p">,</span> <span class="n">PREDICTIONS_TABLE_REF</span><span class="p">,</span> <span class="n">BACKTEST_TABLE_REF</span><span class="p">,</span> \
+    <span class="n">FEAST_STORE</span><span class="p">,</span> <span class="n">BUCKET_ID</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">src.feast_repo.create_store</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_feature_views</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">bigquery</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">NotFound</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">bigquery</span><span class="p">,</span> <span class="n">storage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">NotFound</span><span class="p">,</span> <span class="n">PreconditionFailed</span>
 
 
 <div class="viewcode-block" id="BaseStrategy">
@@ -456,6 +459,30 @@
     <span class="k">return</span> <span class="n">table</span></div>
 
 
+
+<span class="k">def</span><span class="w"> </span><span class="nf">acquire_bq_lock</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">,</span> <span class="n">lock_blob_name</span><span class="p">):</span>
+    <span class="n">storage_client</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+    <span class="n">bucket</span> <span class="o">=</span> <span class="n">storage_client</span><span class="o">.</span><span class="n">bucket</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">)</span>
+    <span class="n">lock_blob</span> <span class="o">=</span> <span class="n">bucket</span><span class="o">.</span><span class="n">blob</span><span class="p">(</span><span class="n">lock_blob_name</span><span class="p">)</span>
+    <span class="n">attempt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">lock_blob</span><span class="o">.</span><span class="n">upload_from_string</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">if_generation_match</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="n">PreconditionFailed</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">attempt</span><span class="p">)</span>
+            <span class="n">attempt</span><span class="o">+=</span><span class="mi">1</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;PreconditionFailed attempt:&#39;</span><span class="p">,</span> <span class="n">attempt</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">release_lock</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">,</span> <span class="n">lock_blob_name</span><span class="p">):</span>
+    <span class="n">storage_client</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+    <span class="n">bucket</span> <span class="o">=</span> <span class="n">storage_client</span><span class="o">.</span><span class="n">bucket</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">)</span>
+    <span class="n">lock_blob</span> <span class="o">=</span> <span class="n">bucket</span><span class="o">.</span><span class="n">blob</span><span class="p">(</span><span class="n">lock_blob_name</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">lock_blob</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">NotFound</span><span class="p">:</span>
+        <span class="k">pass</span>
+
 <span class="k">def</span><span class="w"> </span><span class="nf">merge_bq_table</span><span class="p">(</span><span class="n">table_ref</span><span class="p">,</span> <span class="n">temp_table_ref</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
     <span class="n">clustering_fields</span> <span class="o">=</span> <span class="n">BQ_CLIENT</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="n">table_ref</span><span class="p">)</span><span class="o">.</span><span class="n">clustering_fields</span>
     <span class="n">temp_table</span> <span class="o">=</span> <span class="n">BQ_CLIENT</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="n">temp_table_ref</span><span class="p">)</span>
@@ -469,26 +496,19 @@
     <span class="n">on_clause</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;T.</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1"> = S.</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
     <span class="n">merge_query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">        MERGE `</span><span class="si">{</span><span class="n">table_ref</span><span class="si">}</span><span class="s2">` T</span>
-<span class="s2">        USING (</span>
-<span class="s2">            SELECT * FROM `</span><span class="si">{</span><span class="n">temp_table_ref</span><span class="si">}</span><span class="s2">`</span>
-<span class="s2">            QUALIFY ROW_NUMBER() OVER(</span>
-<span class="s2">                PARTITION BY </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span>
-<span class="s2">            ) = 1</span>
-<span class="s2">        ) S</span>
+<span class="s2">        USING `</span><span class="si">{</span><span class="n">temp_table_ref</span><span class="si">}</span><span class="s2">` S</span>
 <span class="s2">        ON </span><span class="si">{</span><span class="s1">&#39; AND &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">on_clause</span><span class="p">)</span><span class="si">}</span>
 <span class="s2">        WHEN MATCHED THEN</span>
 <span class="s2">            UPDATE SET </span><span class="si">{</span><span class="n">update_clause</span><span class="si">}</span>
 <span class="s2">        WHEN NOT MATCHED THEN</span>
 <span class="s2">            INSERT(</span><span class="si">{</span><span class="n">insert_columns</span><span class="si">}</span><span class="s2">) VALUES(</span><span class="si">{</span><span class="n">insert_values</span><span class="si">}</span><span class="s2">);</span>
 <span class="s2">    &quot;&quot;&quot;</span>
-    <span class="n">job_config</span> <span class="o">=</span> <span class="n">bigquery</span><span class="o">.</span><span class="n">QueryJobConfig</span><span class="p">(</span><span class="n">priority</span><span class="o">=</span><span class="n">bigquery</span><span class="o">.</span><span class="n">QueryPriority</span><span class="o">.</span><span class="n">BATCH</span><span class="p">)</span>
-    <span class="n">merge_job</span> <span class="o">=</span> <span class="n">BQ_CLIENT</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">merge_query</span><span class="p">,</span> <span class="n">job_config</span><span class="o">=</span><span class="n">job_config</span><span class="p">)</span>
-    <span class="n">merge_job</span> <span class="o">=</span> <span class="n">BQ_CLIENT</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="n">merge_job</span><span class="o">.</span><span class="n">job_id</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">merge_job</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
-    <span class="n">attempt</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">while</span> <span class="n">merge_job</span><span class="o">.</span><span class="n">state</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;PENDING&#39;</span><span class="p">,</span><span class="s1">&#39;RUNNING&#39;</span><span class="p">]:</span>
-        <span class="n">merge_job</span> <span class="o">=</span> <span class="n">BQ_CLIENT</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="n">merge_job</span><span class="o">.</span><span class="n">job_id</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">merge_job</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">attempt</span><span class="p">)</span>
-        <span class="n">attempt</span><span class="o">+=</span><span class="mi">1</span>
+
+    <span class="n">lock_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;merge_lock_</span><span class="si">{</span><span class="n">table_ref</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">acquire_bq_lock</span><span class="p">(</span><span class="n">BUCKET_ID</span><span class="p">,</span> <span class="n">lock_name</span><span class="p">)</span>
+    <span class="n">merge_job</span> <span class="o">=</span> <span class="n">BQ_CLIENT</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">merge_query</span><span class="p">)</span>
+    <span class="n">merge_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+    <span class="n">release_lock</span><span class="p">(</span><span class="n">BUCKET_ID</span><span class="p">,</span> <span class="n">lock_name</span><span class="p">)</span>
     <span class="n">BQ_CLIENT</span><span class="o">.</span><span class="n">delete_table</span><span class="p">(</span><span class="n">temp_table_ref</span><span class="p">)</span>
     <span class="k">return</span>
 
@@ -506,11 +526,6 @@
     <span class="p">})</span>
     <span class="k">if</span> <span class="n">sandbox</span><span class="p">:</span>
         <span class="n">exchange</span><span class="o">.</span><span class="n">set_sandbox_mode</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">exchange_name</span> <span class="o">==</span> <span class="s1">&#39;binance&#39;</span><span class="p">:</span>
-        <span class="n">exchange</span><span class="o">.</span><span class="n">urls</span><span class="p">[</span><span class="s1">&#39;api&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">i</span><span class="p">:</span> <span class="n">exchange</span><span class="o">.</span><span class="n">urls</span><span class="p">[</span><span class="s1">&#39;api&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;https://api.binance.com&#39;</span><span class="p">,</span> <span class="s1">&#39;https://api-gcp.binance.com&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>
-            <span class="n">exchange</span><span class="o">.</span><span class="n">urls</span><span class="p">[</span><span class="s1">&#39;api&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
 
     <span class="k">return</span> <span class="n">exchange</span>
 
