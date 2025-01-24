@@ -76,9 +76,9 @@
              
   <section id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h1>
-<p>cryptorick is a Python framework for developing, researching and running quantitative crypto trading strategies.
-It helps build, integrate and orchestrate researching and trading components and tasks.
-The doc is intended to help researchers start researching, developing and testing ideas, features and strategies.</p>
+<p>cryptorick is a Python framework for developing, researching, and running quantitative crypto trading strategies.
+It simplifies the process of building, integrating, and orchestrating research and trading components.
+This documentation is designed to help in-house researchers onboard, enabling them to explore the infrastructure, develop features, test, and research trading strategies.</p>
 <section id="infrastructure">
 <h2>Infrastructure<a class="headerlink" href="#infrastructure" title="Link to this heading"></a></h2>
 <img alt="_images/infrastructure.png" src="_images/infrastructure.png" />
@@ -113,7 +113,8 @@ The doc is intended to help researchers start researching, developing and testin
 --infer<span class="w"> </span><span class="se">\</span>
 --trading_exchange_data_name<span class="w"> </span>kucoin<span class="w"> </span><span class="se">\</span>
 --trading_exchange_name<span class="w"> </span>kucoinfutures<span class="w"> </span><span class="se">\</span>
---api_name<span class="w"> </span>kucoin
+--api_name<span class="w"> </span>kucoin<span class="w"> </span><span class="se">\</span>
+--strategy_name<span class="w"> </span>template_lgbm_strategy_binance
 </pre></div>
 </div>
 </dd>
@@ -122,9 +123,11 @@ The doc is intended to help researchers start researching, developing and testin
 <li><dl>
 <dt><strong>Rebalancing</strong></dt><dd><p>Dir: <code class="file docutils literal notranslate"><span class="pre">src/pipelines/rebalance/</span></code></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>src.pipelines.rebalance.rebalance_daily<span class="w"> </span><span class="se">\</span>
+--execute<span class="w"> </span><span class="se">\</span>
 --trading_exchange_name<span class="w"> </span>kucoinfutures<span class="w"> </span><span class="se">\</span>
 --trading_exchange_data_name<span class="w"> </span>kucoin<span class="w"> </span><span class="se">\</span>
 --api_name<span class="w"> </span>kucoin_prod
+--strategies<span class="w"> </span><span class="s2">&quot;strategy_1 strategy_2 strategy_3&quot;</span>
 </pre></div>
 </div>
 </dd>
@@ -135,7 +138,7 @@ The doc is intended to help researchers start researching, developing and testin
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
 <ol class="arabic">
-<li><p>Fetch researcher’s github branch</p></li>
+<li><p>git clone <a class="reference external" href="https://github.com/shadymokhtar/cryptohouse.git">https://github.com/shadymokhtar/cryptohouse.git</a></p></li>
 <li><p>Edit config file if needed: <code class="file docutils literal notranslate"><span class="pre">src/config/__init__.py</span></code></p></li>
 <li><p>Set up feast feature store and deploy feature views:</p>
 <p>feature definitions: <code class="file docutils literal notranslate"><span class="pre">src/feast_repo/features_definitions.yaml</span></code></p>

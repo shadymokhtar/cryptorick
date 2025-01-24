@@ -6,10 +6,9 @@
 Overview
 ========
 
-cryptorick is a Python framework for developing, researching and running quantitative crypto trading strategies.
-It helps build, integrate and orchestrate researching and trading components and tasks.
-The doc is intended to help researchers start researching, developing and testing ideas, features and strategies.
-
+cryptorick is a Python framework for developing, researching, and running quantitative crypto trading strategies.
+It simplifies the process of building, integrating, and orchestrating research and trading components.
+This documentation is designed to help in-house researchers onboard, enabling them to explore the infrastructure, develop features, test, and research trading strategies.
 
 Infrastructure
 --------------
@@ -19,7 +18,7 @@ Infrastructure
 
 
 Core Functions
--------------
+--------------
 
 
 * **Data Collection**
@@ -50,7 +49,8 @@ Core Functions
       --infer \
       --trading_exchange_data_name kucoin \
       --trading_exchange_name kucoinfutures \
-      --api_name kucoin
+      --api_name kucoin \
+      --strategy_name template_lgbm_strategy_binance
 
 * **Rebalancing**
    Dir: :file:`src/pipelines/rebalance/`
@@ -58,15 +58,17 @@ Core Functions
    .. code-block:: bash
 
       python3 -m src.pipelines.rebalance.rebalance_daily \
+      --execute \
       --trading_exchange_name kucoinfutures \
       --trading_exchange_data_name kucoin \
       --api_name kucoin_prod
+      --strategies "strategy_1 strategy_2 strategy_3"
 
 
 Quick Start
 -----------
 
-1. Fetch researcher's github branch
+1. git clone https://github.com/shadymokhtar/cryptohouse.git
 
 2. Edit config file if needed: :file:`src/config/__init__.py`
 
