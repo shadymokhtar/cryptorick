@@ -49,7 +49,7 @@ FEAST_STORE
     *(feast.feature_store.FeatureStore)* Feast feature store client.
 
 Usage Example
-------------
+-------------
 .. code-block:: python
 
     from src.config import BQ_CLIENT, DATASET_ID, PROJECT_ID
