@@ -2,4 +2,8 @@ cryptorick is a Python framework for developing, researching and running quantit
 
 Read more: https://shadymokhtar.github.io/cryptorick/
 
+Pipelines manager
 ![executions_pipelines_manager](docs/source/_static/pipeline_manager.png)
+
+Feast feature store manager
+![executions_pipelines_manager](docs/source/_static/feature_store.png)
