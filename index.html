@@ -82,6 +82,16 @@ The doc is intended to help researchers start researching, developing and testin
 <section id="infrastructure">
 <h2>Infrastructure<a class="headerlink" href="#infrastructure" title="Link to this heading"></a></h2>
 <img alt="_images/infrastructure.png" src="_images/infrastructure.png" />
+<p>Terraform creates the following resources for production and for each assigned researcher in terraform config:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Bigquery dataset</p></li>
+<li><p>S3 bucket</p></li>
+<li><p>Google workflow</p></li>
+<li><p>Google cloud run job for each core function (data collection, feature engineering, strategies and rebalance jobs)</p></li>
+</ul>
+</div></blockquote>
+<p>Researchers has full access to their designated resources but limited access on other resources.</p>
 </section>
 <section id="interface">
 <h2>Interface<a class="headerlink" href="#interface" title="Link to this heading"></a></h2>

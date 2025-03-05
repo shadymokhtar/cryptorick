@@ -16,6 +16,15 @@ Infrastructure
 
 .. image:: _static/infrastructure.png
 
+Terraform creates the following resources for production and for each assigned researcher in terraform config:
+
+   - Bigquery dataset
+   - S3 bucket
+   - Google workflow
+   - Google cloud run job for each core function (data collection, feature engineering, strategies and rebalance jobs)
+
+Researchers has full access to their designated resources but limited access on other resources.
+
 Interface
 ---------
 .. note::
