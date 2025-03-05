@@ -1,4 +1,1 @@
-_build/
-docs/_build/
-.idea
-.gitignore
+.gitognore
