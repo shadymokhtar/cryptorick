@@ -15,7 +15,12 @@ Infrastructure
 
 .. image:: _static/infrastructure.png
 
+Interface
+---------
+.. note::
 
+   The documentation does not cover interface usage but rather the backend behind the interface.
+.. image:: _static/pipeline_manager.png
 
 Core Functions
 --------------

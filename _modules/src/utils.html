@@ -90,6 +90,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">bigquery</span><span class="p">,</span> <span class="n">storage</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">NotFound</span><span class="p">,</span> <span class="n">PreconditionFailed</span>
 
+<span class="k">def</span><span class="w"> </span><span class="nf">pickle_dump</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wb&#39;</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">pickle_load</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rb&#39;</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BaseStrategy">
 <a class="viewcode-back" href="../../strategy.html#src.utils.BaseStrategy">[docs]</a>
@@ -556,7 +563,7 @@
     <span class="k">return</span> <span class="p">{</span>
         <span class="s1">&#39;feature_views&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">feature_view_name</span><span class="p">:</span> <span class="p">{</span>
             <span class="c1"># &#39;name&#39;: feature_view_name,</span>
-            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
             <span class="s1">&#39;entities&#39;</span><span class="p">:</span> <span class="n">entities_list</span><span class="p">,</span>
             <span class="s1">&#39;ttl&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;days&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
             <span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;bigquery&#39;</span><span class="p">,</span> <span class="s1">&#39;table&#39;</span><span class="p">:</span> <span class="n">table_name</span><span class="p">,</span> <span class="s1">&#39;production&#39;</span><span class="p">:</span> <span class="n">production</span><span class="p">},</span>
