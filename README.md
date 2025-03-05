@@ -6,4 +6,4 @@ Pipelines manager
 ![executions_pipelines_manager](docs/source/_static/pipeline_manager.png)
 
 Feast feature store manager
-![executions_pipelines_manager](docs/source/_static/feature_store.png)
+![executions_pipelines_manager](docs/source/_static/feature_store_manager.png)
