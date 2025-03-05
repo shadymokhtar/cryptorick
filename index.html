@@ -76,9 +76,9 @@
              
   <section id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h1>
-<p>cryptorick is a Python framework for developing, researching, and running quantitative crypto trading strategies.
-It simplifies the process of building, integrating, and orchestrating research and trading components.
-This documentation is designed to help in-house researchers onboard, enabling them to explore the infrastructure, develop features, test, and research trading strategies.</p>
+<p>cryptorick is a Python framework for developing, researching and running quantitative crypto trading strategies.
+It helps build, integrate and orchestrate researching and trading components and tasks.
+The doc is intended to help researchers start researching, developing and testing ideas, features and strategies.</p>
 <section id="infrastructure">
 <h2>Infrastructure<a class="headerlink" href="#infrastructure" title="Link to this heading"></a></h2>
 <img alt="_images/infrastructure.png" src="_images/infrastructure.png" />
@@ -89,13 +89,18 @@ This documentation is designed to help in-house researchers onboard, enabling th
 <p class="admonition-title">Note</p>
 <p>The documentation does not cover interface usage but rather the backend behind the interface.</p>
 </div>
+<p>Pipeline dashboard supports executing jobs locally and on the cloud as well as creating and executing workflows on the cloud.</p>
+<p>Pipeline jobs executed by priority order, jobs with same priority are executed in parallel.</p>
 <img alt="_images/pipeline_manager.png" src="_images/pipeline_manager.png" />
+<p>Feature store manager supports creating, updating and deploying feature views.</p>
+<img alt="_images/feature_store_manager.png" src="_images/feature_store_manager.png" />
 </section>
 <section id="core-functions">
 <h2>Core Functions<a class="headerlink" href="#core-functions" title="Link to this heading"></a></h2>
 <ul>
 <li><dl>
-<dt><strong>Data Collection</strong></dt><dd><p>Dir: <code class="file docutils literal notranslate"><span class="pre">src/pipelines/fetch_ccxt_data_bq/</span></code></p>
+<dt><strong>Data Collection</strong></dt><dd><p>Directory: <code class="file docutils literal notranslate"><span class="pre">src/pipelines/fetch_ccxt_data_bq/</span></code></p>
+<p>example module:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>src.pipelines.fetch_ccxt_data_bq.fetch_ccxt_data_bq<span class="w"> </span><span class="se">\</span>
 --trading_exchange_data_name<span class="w"> </span>kucoin<span class="w"> </span><span class="se">\</span>
 --api_name<span class="w"> </span>kucoin<span class="w"> </span><span class="se">\</span>
@@ -107,7 +112,7 @@ This documentation is designed to help in-house researchers onboard, enabling th
 </dl>
 </li>
 <li><dl>
-<dt><strong>Feature Engineering</strong></dt><dd><p>Dir: <code class="file docutils literal notranslate"><span class="pre">src/pipelines/features/</span></code></p>
+<dt><strong>Feature Engineering</strong></dt><dd><p>Directory: <code class="file docutils literal notranslate"><span class="pre">src/pipelines/features/</span></code></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>src.pipelines.features.create_features<span class="w"> </span><span class="se">\</span>
 --trading_exchange_data_name<span class="w"> </span>kucoin
 </pre></div>
@@ -116,7 +121,7 @@ This documentation is designed to help in-house researchers onboard, enabling th
 </dl>
 </li>
 <li><dl>
-<dt><strong>Strategy Operations</strong></dt><dd><p>Dir: <code class="file docutils literal notranslate"><span class="pre">src/pipelines/strategies/</span></code></p>
+<dt><strong>Strategy Operations</strong></dt><dd><p>Directory: <code class="file docutils literal notranslate"><span class="pre">src/pipelines/strategies/</span></code></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>src.pipelines.strategies.template_strategy.template_lgbm<span class="w"> </span><span class="se">\</span>
 --infer<span class="w"> </span><span class="se">\</span>
 --trading_exchange_data_name<span class="w"> </span>kucoin<span class="w"> </span><span class="se">\</span>
@@ -129,7 +134,8 @@ This documentation is designed to help in-house researchers onboard, enabling th
 </dl>
 </li>
 <li><dl>
-<dt><strong>Rebalancing</strong></dt><dd><p>Dir: <code class="file docutils literal notranslate"><span class="pre">src/pipelines/rebalance/</span></code></p>
+<dt><strong>Rebalancing</strong></dt><dd><p>Directory: <code class="file docutils literal notranslate"><span class="pre">src/pipelines/rebalance/</span></code>
+example:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>src.pipelines.rebalance.rebalance_daily<span class="w"> </span><span class="se">\</span>
 --execute<span class="w"> </span><span class="se">\</span>
 --trading_exchange_name<span class="w"> </span>kucoinfutures<span class="w"> </span><span class="se">\</span>
@@ -146,11 +152,14 @@ This documentation is designed to help in-house researchers onboard, enabling th
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
 <ol class="arabic">
-<li><p>git clone <a class="reference external" href="https://github.com/shadymokhtar/cryptohouse.git">https://github.com/shadymokhtar/cryptohouse.git</a></p></li>
+<li><p>Clone git</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/shadymokhtar/cryptohouse.git
+</pre></div>
+</div>
+</li>
 <li><p>Edit config file if needed: <code class="file docutils literal notranslate"><span class="pre">src/config/__init__.py</span></code></p></li>
-<li><p>Set up feast feature store and deploy feature views:</p>
-<p>feature definitions: <code class="file docutils literal notranslate"><span class="pre">src/feast_repo/features_definitions.yaml</span></code></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>src.feast_repo.create_store
+<li><p>Run streamlit dashboard</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>streamlit<span class="w"> </span>run<span class="w"> </span>dashboard/app.py
 </pre></div>
 </div>
 </li>

@@ -6,9 +6,10 @@
 Overview
 ========
 
-cryptorick is a Python framework for developing, researching, and running quantitative crypto trading strategies.
-It simplifies the process of building, integrating, and orchestrating research and trading components.
-This documentation is designed to help in-house researchers onboard, enabling them to explore the infrastructure, develop features, test, and research trading strategies.
+cryptorick is a Python framework for developing, researching and running quantitative crypto trading strategies.
+It helps build, integrate and orchestrate researching and trading components and tasks.
+The doc is intended to help researchers start researching, developing and testing ideas, features and strategies.
+
 
 Infrastructure
 --------------
@@ -20,14 +21,25 @@ Interface
 .. note::
 
    The documentation does not cover interface usage but rather the backend behind the interface.
+
+Pipeline dashboard supports executing jobs locally and on the cloud as well as creating and executing workflows on the cloud.
+
+Pipeline jobs executed by priority order, jobs with same priority are executed in parallel.
+
 .. image:: _static/pipeline_manager.png
 
+Feature store manager supports creating, updating and deploying feature views.
+
+.. image:: _static/feature_store_manager.png
+
 Core Functions
---------------
+-------------
 
 
 * **Data Collection**
-   Dir: :file:`src/pipelines/fetch_ccxt_data_bq/`
+   Directory: :file:`src/pipelines/fetch_ccxt_data_bq/`
+
+   example module:
 
    .. code-block:: bash
 
@@ -38,7 +50,7 @@ Core Functions
       --from_datetime "2017-01-01 00:00:00"
 
 * **Feature Engineering**
-   Dir: :file:`src/pipelines/features/`
+   Directory: :file:`src/pipelines/features/`
 
    .. code-block:: bash
 
@@ -46,7 +58,7 @@ Core Functions
       --trading_exchange_data_name kucoin
 
 * **Strategy Operations**
-   Dir: :file:`src/pipelines/strategies/`
+   Directory: :file:`src/pipelines/strategies/`
 
    .. code-block:: bash
 
@@ -58,7 +70,8 @@ Core Functions
       --strategy_name template_lgbm_strategy_binance
 
 * **Rebalancing**
-   Dir: :file:`src/pipelines/rebalance/`
+   Directory: :file:`src/pipelines/rebalance/`
+   example:
 
    .. code-block:: bash
 
@@ -73,17 +86,19 @@ Core Functions
 Quick Start
 -----------
 
-1. git clone https://github.com/shadymokhtar/cryptohouse.git
-
-2. Edit config file if needed: :file:`src/config/__init__.py`
-
-3. Set up feast feature store and deploy feature views:
-
-   feature definitions: :file:`src/feast_repo/features_definitions.yaml`
+1. Clone git
 
    .. code-block:: bash
 
-      python3 -m src.feast_repo.create_store
+      git clone https://github.com/shadymokhtar/cryptohouse.git
+
+2. Edit config file if needed: :file:`src/config/__init__.py`
+
+3. Run streamlit dashboard
+
+   .. code-block:: bash
+
+      python3 -m streamlit run dashboard/app.py
 
 
 .. toctree::
