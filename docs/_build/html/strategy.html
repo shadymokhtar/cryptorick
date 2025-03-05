@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strategy Class &mdash; cryptorick 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Deploy Jobs" href="deploy.html" />
+    <link rel="prev" title="src.utils.get_max_timestamp_from_bq" href="generated/src.utils.get_max_timestamp_from_bq.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            cryptorick
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Datasets and Features</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Strategy Class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#class-reference">Class Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.utils.BaseStrategy"><code class="docutils literal notranslate"><span class="pre">BaseStrategy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.utils.BaseStrategy.strategy_name"><code class="docutils literal notranslate"><span class="pre">BaseStrategy.strategy_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.utils.BaseStrategy.back_test"><code class="docutils literal notranslate"><span class="pre">BaseStrategy.back_test()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.utils.BaseStrategy.generate_live_preds"><code class="docutils literal notranslate"><span class="pre">BaseStrategy.generate_live_preds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.utils.BaseStrategy.train_all"><code class="docutils literal notranslate"><span class="pre">BaseStrategy.train_all()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-strategy-implementation">Example Strategy Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploy Jobs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cryptorick</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Strategy Class</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/strategy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="strategy-class">
+<h1>Strategy Class<a class="headerlink" href="#strategy-class" title="Link to this heading"></a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id2">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#example-strategy-implementation" id="id3">Example Strategy Implementation</a></p></li>
+</ul>
+</nav>
+<section id="overview">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Strategy class provides three core methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">train_all</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">generate_live_predictions</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">back_test</span></code></p></li>
+</ul>
+</section>
+<section id="class-reference">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Class Reference</a><a class="headerlink" href="#class-reference" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.utils.BaseStrategy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">BaseStrategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#BaseStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.BaseStrategy" title="Link to this definition"></a></dt>
+<dd><p>Base class for strategies. A strategy has three core methods.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.BaseStrategy.strategy_name">
+<span class="sig-name descname"><span class="pre">strategy_name</span></span><a class="headerlink" href="#src.utils.BaseStrategy.strategy_name" title="Link to this definition"></a></dt>
+<dd><p>The name of the strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.BaseStrategy.back_test">
+<span class="sig-name descname"><span class="pre">back_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backtest_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backtest_from_datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backtest_to_datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_every_n_tuesday</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookback_warmup_days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookback_days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#BaseStrategy.back_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.BaseStrategy.back_test" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backtest_name</strong> (<em>str</em>) – A unique identifier for the backtest.</p></li>
+<li><p><strong>backtest_from_datetime</strong> (<em>datetime</em>) – Start date and time for the backtest period.</p></li>
+<li><p><strong>backtest_to_datetime</strong> (<em>datetime</em>) – End date and time for the backtest period.</p></li>
+<li><p><strong>train_every_n_tuesday</strong> (<em>int</em>) – Interval (in weeks) to retrain the model during the backtest.</p></li>
+<li><p><strong>lookback_warmup_days</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of days to load prior training start date.</p></li>
+<li><p><strong>lookback_days</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of days for the rolling window lookback. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If the method is not implemented in the subclass.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.BaseStrategy.generate_live_preds">
+<span class="sig-name descname"><span class="pre">generate_live_preds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#BaseStrategy.generate_live_preds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.BaseStrategy.generate_live_preds" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.BaseStrategy.train_all">
+<span class="sig-name descname"><span class="pre">train_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#BaseStrategy.train_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.BaseStrategy.train_all" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="example-strategy-implementation">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Example Strategy Implementation</a><a class="headerlink" href="#example-strategy-implementation" title="Link to this heading"></a></h2>
+<p>Below is an example of a simple linear regression strategy using features from the <code class="docutils literal notranslate"><span class="pre">log_ret_ohlc</span></code> feature view.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">train_all</span></code>: saves models in: <code class="docutils literal notranslate"><span class="pre">models/example_strategy/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">back_test</span></code>: saves models in: <code class="docutils literal notranslate"><span class="pre">backtests/example_strategy/</span></code> and saves</p></li>
+<li><p>Predictions are saved in BigQuery with format: <code class="docutils literal notranslate"><span class="pre">{strategy_name}_{backtest_name}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">train_all</span></code> saves trained models in storage bucket dir <code class="docutils literal notranslate"><span class="pre">models/example_strategy/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">back_test</span></code> saves trained models in storage bucket dir <code class="docutils literal notranslate"><span class="pre">backtests/example_strategy/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">back_test</span></code> saves predictions in bigquery backtest table in a column named <code class="docutils literal notranslate"><span class="pre">example_strategy_example_backtest</span></code> which follows the format <code class="docutils literal notranslate"><span class="pre">{strategy_name}_{backtest_name}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">generate_live_predictions</span></code> saves predictions in bigquery predictions table</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ccxt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">storage</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">FEAST_STORE</span><span class="p">,</span> <span class="n">PREDICTIONS_TABLE_REF</span><span class="p">,</span> <span class="n">BACKTEST_TABLE_REF</span><span class="p">,</span> <span class="n">BUCKET_ID</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseStrategy</span><span class="p">,</span> <span class="n">load_to_bq_table</span><span class="p">,</span> <span class="n">fetch_from_feature_store</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">dummy_strategy</span><span class="p">(</span><span class="n">BaseStrategy</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strategy_name</span> <span class="o">=</span> <span class="n">strategy_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;log_ret_open&#39;</span><span class="p">,</span><span class="s1">&#39;log_ret_high&#39;</span><span class="p">,</span><span class="s1">&#39;log_ret_low&#39;</span><span class="p">,</span><span class="s1">&#39;log_ret_close&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">train_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1">#fetch all features from feature view name log_ret_ohlc</span>
+        <span class="n">feature_view</span> <span class="o">=</span> <span class="n">FEAST_STORE</span><span class="o">.</span><span class="n">get_feature_view</span><span class="p">(</span><span class="s2">&quot;log_ret_ohlc&quot;</span><span class="p">)</span>
+        <span class="n">feature_references</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">feature_view</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">feature</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">feature_view</span><span class="o">.</span><span class="n">features</span><span class="p">]</span>
+
+        <span class="c1">#get ccxt exchange name handle kucoin -&gt; KuCoin</span>
+        <span class="n">exchange_ccxt_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ccxt</span><span class="p">,</span> <span class="s1">&#39;kucoin&#39;</span><span class="p">)()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">fetch_from_feature_store</span><span class="p">(</span><span class="n">from_datetime</span><span class="o">=</span><span class="s1">&#39;2025-01-01 00:00:00&#39;</span><span class="p">,</span>
+                                           <span class="n">to_datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                           <span class="n">feature_refs</span><span class="o">=</span><span class="n">feature_references</span><span class="p">,</span>
+                                           <span class="n">entities</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;exchange&quot;</span><span class="p">:</span><span class="n">exchange_ccxt_name</span><span class="p">}</span>
+                                           <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_target</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_dir</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;models/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_live_preds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">feature_view</span> <span class="o">=</span> <span class="n">FEAST_STORE</span><span class="o">.</span><span class="n">get_feature_view</span><span class="p">(</span><span class="s2">&quot;log_ret_ohlc&quot;</span><span class="p">)</span>
+        <span class="n">feature_references</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">feature_view</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">feature</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">feature_view</span><span class="o">.</span><span class="n">features</span><span class="p">]</span>
+
+        <span class="n">exchange_ccxt_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ccxt</span><span class="p">,</span> <span class="s1">&#39;kucoin&#39;</span><span class="p">)()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+
+        <span class="c1">#get previous day date_time in string format</span>
+        <span class="n">from_datetime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">-</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">fetch_from_feature_store</span><span class="p">(</span><span class="n">from_datetime</span><span class="o">=</span><span class="n">from_datetime</span><span class="p">,</span>
+                                           <span class="n">to_datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                           <span class="n">feature_refs</span><span class="o">=</span><span class="n">feature_references</span><span class="p">,</span>
+                                           <span class="n">entities</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;exchange&quot;</span><span class="p">:</span><span class="n">exchange_ccxt_name</span><span class="p">}</span>
+                                           <span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_latest_model</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;models/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy_name</span><span class="si">}</span><span class="s1">/&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+        <span class="n">errors</span> <span class="o">=</span> <span class="n">load_to_bq_table</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;event_timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;exchange&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strategy_name</span><span class="p">]],</span>
+                 <span class="n">table_ref</span><span class="o">=</span><span class="n">PREDICTIONS_TABLE_REF</span><span class="p">,</span>
+                 <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;event_timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;exchange&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">errors</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">back_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                  <span class="n">backtest_name</span><span class="p">,</span>
+                  <span class="n">backtest_from_datetime</span><span class="p">,</span>
+                  <span class="n">backtest_to_datetime</span><span class="p">,</span>
+                  <span class="n">train_every_n_tuesday</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                  <span class="n">lookback_warmup_days</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                  <span class="n">lookback_days</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="n">from_datetime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">backtest_from_datetime</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">to_datetime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">backtest_to_datetime</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1">#train_every_n_tuesday = 4, train every 4th tuesday ~ (every month)</span>
+        <span class="c1">#self.backtest_dates: timeseries walkforward backtest training dates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backtest_dates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">from_datetime</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">to_datetime</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">train_every_n_tuesday</span><span class="si">}</span><span class="s1">W-TUE&#39;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s1">&#39;UTC&#39;</span><span class="p">))</span>
+
+        <span class="c1">#append backtest end date if not included</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backtest_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">to_datetime</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">backtest_dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">to_datetime</span><span class="p">)</span>
+
+        <span class="c1">#backtest name, unique identifier for backtest models dir and backtest results bigquery column</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backtest_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">backtest_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lookback_warmup_days</span> <span class="o">=</span> <span class="n">lookback_warmup_days</span>
+
+        <span class="n">feature_view</span> <span class="o">=</span> <span class="n">FEAST_STORE</span><span class="o">.</span><span class="n">get_feature_view</span><span class="p">(</span><span class="s2">&quot;log_ret_ohlc&quot;</span><span class="p">)</span>
+        <span class="n">feature_references</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">feature_view</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">feature</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">feature_view</span><span class="o">.</span><span class="n">features</span><span class="p">]</span>
+
+        <span class="n">exchange_ccxt_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ccxt</span><span class="p">,</span> <span class="s1">&#39;kucoin&#39;</span><span class="p">)()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">fetch_from_feature_store</span><span class="p">(</span><span class="n">from_datetime</span><span class="o">=</span><span class="n">from_datetime</span><span class="p">,</span>
+                                           <span class="n">to_datetime</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backtest_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                           <span class="n">feature_refs</span><span class="o">=</span><span class="n">feature_references</span><span class="p">,</span>
+                                           <span class="n">entities</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;exchange&quot;</span><span class="p">:</span><span class="n">exchange_ccxt_name</span><span class="p">}</span>
+                                           <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_target</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">backtest_predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([])</span>
+
+        <span class="c1">#_generate_train_test: generator for train and test data,</span>
+        <span class="k">for</span> <span class="n">counter</span><span class="p">,</span> <span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_generate_train_test</span><span class="p">()):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+            <span class="n">train</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">],</span> <span class="n">train</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_dir</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;backtests/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">backtest_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_latest_model</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;backtests/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">backtest_id</span><span class="si">}</span><span class="s1">/&#39;</span><span class="p">)</span>
+
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">])</span>
+
+            <span class="n">test</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">backtest_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred</span>
+
+            <span class="c1">#in case warm_up_days &gt; 0, we need to ensure test doesnt include warm up days</span>
+            <span class="n">test</span> <span class="o">=</span> <span class="n">test</span><span class="p">[(</span><span class="n">test</span><span class="o">.</span><span class="n">event_timestamp</span> <span class="o">&gt;=</span> <span class="n">date</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">event_timestamp</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">backtest_dates</span><span class="p">[</span><span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">backtest_predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">backtest_predictions</span><span class="p">,</span> <span class="n">test</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+
+        <span class="n">load_to_bq_table</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">backtest_predictions</span><span class="p">[[</span><span class="s1">&#39;event_timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;exchange&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">backtest_id</span><span class="p">]],</span>
+                         <span class="n">table_ref</span><span class="o">=</span><span class="n">BACKTEST_TABLE_REF</span><span class="p">,</span>
+                         <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;event_timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;exchange&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">])</span>
+
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;symbol&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">log_ret_close</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">):</span>
+        <span class="n">storage_client</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+        <span class="n">bucket</span> <span class="o">=</span> <span class="n">storage_client</span><span class="o">.</span><span class="n">bucket</span><span class="p">(</span><span class="n">BUCKET_ID</span><span class="p">)</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">_%H%M%S&#39;</span><span class="p">)</span>
+        <span class="n">blob</span> <span class="o">=</span> <span class="n">bucket</span><span class="o">.</span><span class="n">blob</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model_dir</span><span class="si">}</span><span class="s1">/model_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+        <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">buffer</span><span class="p">)</span>
+        <span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">blob</span><span class="o">.</span><span class="n">upload_from_file</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_latest_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">):</span>
+
+        <span class="n">storage_client</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+        <span class="n">bucket</span> <span class="o">=</span> <span class="n">storage_client</span><span class="o">.</span><span class="n">bucket</span><span class="p">(</span><span class="n">BUCKET_ID</span><span class="p">)</span>
+        <span class="n">blobs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">bucket</span><span class="o">.</span><span class="n">list_blobs</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model_dir</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+
+        <span class="c1">#get latest created blob</span>
+        <span class="n">blob</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">blob</span><span class="p">:</span> <span class="n">blob</span><span class="o">.</span><span class="n">time_created</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+        <span class="n">blob</span><span class="o">.</span><span class="n">download_to_file</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+        <span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">model</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_train_test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">date</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">backtest_dates</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">train_end</span> <span class="o">=</span> <span class="n">date</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">test_start</span> <span class="o">=</span> <span class="n">date</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lookback_warmup_days</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">date</span><span class="p">,</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">event_timestamp</span> <span class="o">&lt;=</span> <span class="n">train_end</span><span class="p">],</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">event_timestamp</span> <span class="o">&gt;=</span> <span class="n">test_start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">event_timestamp</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">backtest_dates</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])])</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">strat</span> <span class="o">=</span> <span class="n">dummy_strategy</span><span class="p">(</span><span class="n">strategy_name</span><span class="o">=</span><span class="s1">&#39;example_strategy&#39;</span><span class="p">)</span>
+
+    <span class="n">strat</span><span class="o">.</span><span class="n">back_test</span><span class="p">(</span><span class="n">backtest_name</span><span class="o">=</span><span class="s1">&#39;example_backtest&#39;</span><span class="p">,</span>
+                    <span class="n">backtest_from_datetime</span><span class="o">=</span><span class="s1">&#39;2025-01-05 00:00:00&#39;</span><span class="p">,</span>
+                    <span class="n">backtest_to_datetime</span><span class="o">=</span><span class="s1">&#39;2025-01-09 00:00:00&#39;</span><span class="p">,</span>
+                    <span class="n">train_every_n_tuesday</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">lookback_warmup_days</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="generated/src.utils.get_max_timestamp_from_bq.html" class="btn btn-neutral float-left" title="src.utils.get_max_timestamp_from_bq" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="deploy.html" class="btn btn-neutral float-right" title="Deploy Jobs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, smokh.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

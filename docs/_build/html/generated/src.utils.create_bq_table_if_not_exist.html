@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.utils.create_bq_table_if_not_exist &mdash; cryptorick 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="src.utils.load_to_bq_table" href="src.utils.load_to_bq_table.html" />
+    <link rel="prev" title="Datasets and Features" href="../dataset.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            cryptorick
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Config</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../dataset.html">Datasets and Features</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../dataset.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dataset.html#common-table-structure">Common Table Structure</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../dataset.html#utility-functions">Utility Functions</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">src.utils.create_bq_table_if_not_exist</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.utils.create_bq_table_if_not_exist"><code class="docutils literal notranslate"><span class="pre">create_bq_table_if_not_exist()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.utils.load_to_bq_table.html">src.utils.load_to_bq_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.utils.fetch_from_feature_store.html">src.utils.fetch_from_feature_store</a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.utils.get_max_timestamp_from_bq.html">src.utils.get_max_timestamp_from_bq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset.html#src.utils.create_bq_table_if_not_exist"><code class="docutils literal notranslate"><span class="pre">create_bq_table_if_not_exist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset.html#src.utils.load_to_bq_table"><code class="docutils literal notranslate"><span class="pre">load_to_bq_table()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset.html#src.utils.fetch_from_feature_store"><code class="docutils literal notranslate"><span class="pre">fetch_from_feature_store()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset.html#src.utils.get_max_timestamp_from_bq"><code class="docutils literal notranslate"><span class="pre">get_max_timestamp_from_bq()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../dataset.html#example-creating-and-deploying-features">Example: Creating and Deploying Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../strategy.html">Strategy Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deploy.html">Deploy Jobs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">cryptorick</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../dataset.html">Datasets and Features</a></li>
+      <li class="breadcrumb-item active">src.utils.create_bq_table_if_not_exist</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/src.utils.create_bq_table_if_not_exist.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-utils-create-bq-table-if-not-exist">
+<h1>src.utils.create_bq_table_if_not_exist<a class="headerlink" href="#src-utils-create-bq-table-if-not-exist" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.create_bq_table_if_not_exist">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">create_bq_table_if_not_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">SchemaField</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clustering_fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Table</span></span></span><a class="reference internal" href="../_modules/src/utils.html#create_bq_table_if_not_exist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.create_bq_table_if_not_exist" title="Link to this definition"></a></dt>
+<dd><p>Creates a BigQuery table if it doesn’t exist with the specified schema and clustering fields.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table_ref</strong> – A reference to the BigQuery table,
+bigquery table reference format: project_id.dataset_id.table_name</p></li>
+<li><p><strong>schema</strong> (<em>list</em>) – The schema definition for the table as a list of
+google.cloud.bigquery.SchemaField objects.</p></li>
+<li><p><strong>clustering_fields</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of column names to use for table clustering.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created or existing BigQuery table object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>google.cloud.bigquery.table.Table</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">bigquery</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">BQ_CLIENT</span><span class="p">,</span> <span class="n">PROJECT_ID</span><span class="p">,</span> <span class="n">DATASET_ID</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_bq_table_if_not_exist</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table_ref</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROJECT_ID</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">DATASET_ID</span><span class="si">}</span><span class="s1">.new_table_name&#39;</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;event_timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMESTAMP&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;exchange&quot;</span><span class="p">,</span> <span class="s2">&quot;STRING&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;STRING&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;high&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;volume&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span> <span class="o">=</span> <span class="n">create_bq_table_if_not_exist</span><span class="p">(</span><span class="n">table_ref</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;event_timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;exchange&#39;</span><span class="p">,</span><span class="s1">&#39;symbol&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../dataset.html" class="btn btn-neutral float-left" title="Datasets and Features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="src.utils.load_to_bq_table.html" class="btn btn-neutral float-right" title="src.utils.load_to_bq_table" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, smokh.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

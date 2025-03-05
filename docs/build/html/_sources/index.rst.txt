@@ -6,19 +6,25 @@
 Overview
 ========
 
-cryptorick is a Python framework for developing, researching, and running quantitative crypto trading strategies.
-It simplifies the process of building, integrating, and orchestrating research and trading components.
-This documentation is designed to help in-house researchers onboard, enabling them to explore the infrastructure, develop features, test, and research trading strategies.
+cryptorick is a Python framework for developing, researching and running quantitative crypto trading strategies.
+It helps build, integrate and orchestrate researching and trading components and tasks.
+The doc is intended to help researchers start researching, developing and testing ideas, features and strategies.
+
 
 Infrastructure
 --------------
 
 .. image:: _static/infrastructure.png
 
+Interface
+---------
+.. note::
 
+   The documentation does not cover interface usage but rather the backend behind the interface.
+.. image:: _static/pipeline_manager.png
 
 Core Functions
---------------
+-------------
 
 
 * **Data Collection**

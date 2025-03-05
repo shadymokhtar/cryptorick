@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datasets and Features &mdash; cryptorick 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.utils.create_bq_table_if_not_exist" href="generated/src.utils.create_bq_table_if_not_exist.html" />
+    <link rel="prev" title="Config" href="config.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            cryptorick
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Datasets and Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-table-structure">Common Table Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/src.utils.create_bq_table_if_not_exist.html">src.utils.create_bq_table_if_not_exist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/src.utils.load_to_bq_table.html">src.utils.load_to_bq_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/src.utils.fetch_from_feature_store.html">src.utils.fetch_from_feature_store</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/src.utils.get_max_timestamp_from_bq.html">src.utils.get_max_timestamp_from_bq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.utils.create_bq_table_if_not_exist"><code class="docutils literal notranslate"><span class="pre">create_bq_table_if_not_exist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.utils.load_to_bq_table"><code class="docutils literal notranslate"><span class="pre">load_to_bq_table()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.utils.fetch_from_feature_store"><code class="docutils literal notranslate"><span class="pre">fetch_from_feature_store()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.utils.get_max_timestamp_from_bq"><code class="docutils literal notranslate"><span class="pre">get_max_timestamp_from_bq()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-creating-and-deploying-features">Example: Creating and Deploying Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-new-feature-module">1. Create New Feature Module:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-feature-view-definition">2. Add Feature View Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deploy-features">3. Deploy Features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="strategy.html">Strategy Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploy Jobs</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cryptorick</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Datasets and Features</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/dataset.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="datasets-and-features">
+<h1>Datasets and Features<a class="headerlink" href="#datasets-and-features" title="Link to this heading"></a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#common-table-structure" id="id2">Common Table Structure</a></p></li>
+<li><p><a class="reference internal" href="#utility-functions" id="id3">Utility Functions</a></p></li>
+<li><p><a class="reference internal" href="#example-creating-and-deploying-features" id="id4">Example: Creating and Deploying Features</a></p>
+<ul>
+<li><p><a class="reference internal" href="#create-new-feature-module" id="id5">1. Create New Feature Module:</a></p></li>
+<li><p><a class="reference internal" href="#add-feature-view-definition" id="id6">2. Add Feature View Definition</a></p></li>
+<li><p><a class="reference internal" href="#deploy-features" id="id7">3. Deploy Features</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="overview">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Data (raw OHLCV data, features, backtests, predictions) is stored in BigQuery tables.
+A <strong>Feast feature store</strong> is deployed for data retrieval and feature management.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is recommended to retrieve data from Feast rather than directly querying BigQuery
+when developing features or strategy functions.</p>
+</div>
+<p>Feature definitions are managed in: <code class="file docutils literal notranslate"><span class="pre">src/feast_repo/features_definitions.yaml</span></code></p>
+</section>
+<section id="common-table-structure">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Common Table Structure</a><a class="headerlink" href="#common-table-structure" title="Link to this heading"></a></h2>
+<ul>
+<li><dl>
+<dt><strong>event_timestamp</strong> (mandatory)</dt><dd><p>Timestamp column following the format ‘YYYY-MM-DDTHH:MM:SS±hh:mm’</p>
+<p>Example: ‘2017-01-01 00:00:00’ or ‘2017-01-01 00:00:00+00:00’</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Entity Columns</strong></dt><dd><p>Columns that uniquely identify rows within a specific <code class="docutils literal notranslate"><span class="pre">event_timestamp</span></code>.
+Represent primary dimensions like <code class="docutils literal notranslate"><span class="pre">exchange</span></code> and <code class="docutils literal notranslate"><span class="pre">symbol</span></code>.
+Used for joining, merging, and upserting new data.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Clustering Fields</strong></dt><dd><p>Used for query optimization and efficient data retrieval.
+Currently set as the union of <code class="docutils literal notranslate"><span class="pre">event_timestamp</span></code> and entity columns.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Table References</strong></dt><dd><p>Format: {PROJECT_ID}.{DATASET_ID}.{table_name}</p>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="utility-functions">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Utility Functions</a><a class="headerlink" href="#utility-functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/src.utils.create_bq_table_if_not_exist.html#src.utils.create_bq_table_if_not_exist" title="src.utils.create_bq_table_if_not_exist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.utils.create_bq_table_if_not_exist</span></code></a>(...)</p></td>
+<td><p>Creates a BigQuery table if it doesn't exist with the specified schema and clustering fields.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/src.utils.load_to_bq_table.html#src.utils.load_to_bq_table" title="src.utils.load_to_bq_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.utils.load_to_bq_table</span></code></a>(df, table_ref, keys)</p></td>
+<td><p>Upsert and update missing values from a pandas DataFrame into a BigQuery table with schema evolution support.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/src.utils.fetch_from_feature_store.html#src.utils.fetch_from_feature_store" title="src.utils.fetch_from_feature_store"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.utils.fetch_from_feature_store</span></code></a>(...[, ...])</p></td>
+<td><p>Fetches historical feature data from Feast feature store within a specified time range and entity constraints.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/src.utils.get_max_timestamp_from_bq.html#src.utils.get_max_timestamp_from_bq" title="src.utils.get_max_timestamp_from_bq"><code class="xref py py-obj docutils literal notranslate"><span class="pre">src.utils.get_max_timestamp_from_bq</span></code></a>(table_ref)</p></td>
+<td><p>Retrieves the maximum event_timestamp from a BigQuery table with optional filtering.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.create_bq_table_if_not_exist">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">create_bq_table_if_not_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">SchemaField</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clustering_fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Table</span></span></span><a class="reference internal" href="_modules/src/utils.html#create_bq_table_if_not_exist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.create_bq_table_if_not_exist" title="Link to this definition"></a></dt>
+<dd><p>Creates a BigQuery table if it doesn’t exist with the specified schema and clustering fields.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table_ref</strong> – A reference to the BigQuery table,
+bigquery table reference format: project_id.dataset_id.table_name</p></li>
+<li><p><strong>schema</strong> (<em>list</em>) – The schema definition for the table as a list of
+google.cloud.bigquery.SchemaField objects.</p></li>
+<li><p><strong>clustering_fields</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of column names to use for table clustering.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created or existing BigQuery table object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>google.cloud.bigquery.table.Table</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">bigquery</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">BQ_CLIENT</span><span class="p">,</span> <span class="n">PROJECT_ID</span><span class="p">,</span> <span class="n">DATASET_ID</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_bq_table_if_not_exist</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table_ref</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROJECT_ID</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">DATASET_ID</span><span class="si">}</span><span class="s1">.new_table_name&#39;</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">schema</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;event_timestamp&quot;</span><span class="p">,</span> <span class="s2">&quot;TIMESTAMP&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;exchange&quot;</span><span class="p">,</span> <span class="s2">&quot;STRING&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;STRING&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;high&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="n">bigquery</span><span class="o">.</span><span class="n">SchemaField</span><span class="p">(</span><span class="s2">&quot;volume&quot;</span><span class="p">,</span> <span class="s2">&quot;FLOAT&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span> <span class="o">=</span> <span class="n">create_bq_table_if_not_exist</span><span class="p">(</span><span class="n">table_ref</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;event_timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;exchange&#39;</span><span class="p">,</span><span class="s1">&#39;symbol&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.load_to_bq_table">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">load_to_bq_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/utils.html#load_to_bq_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.load_to_bq_table" title="Link to this definition"></a></dt>
+<dd><p>Upsert and update missing values from a pandas DataFrame into a BigQuery table with schema evolution support.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the data to be loaded into BigQuery.</p></li>
+<li><p><strong>table_ref</strong> (<em>str</em>) – The full reference to the target BigQuery table in the format
+‘project_id.dataset_id.table_id’.</p></li>
+<li><p><strong>keys</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of column names to be used as clustering fields and merge keys.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">BQ_CLIENT</span><span class="p">,</span> <span class="n">PROJECT_ID</span><span class="p">,</span> <span class="n">DATASET_ID</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_to_bq_table</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s1">&#39;event_timestamp&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">&#39;exchange&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">&#39;strategy_prediction&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table_ref</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROJECT_ID</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">DATASET_ID</span><span class="si">}</span><span class="s1">.prediction_table_name&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;event_timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;exchange&#39;</span><span class="p">,</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">load_to_bq_table</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">table_ref</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.fetch_from_feature_store">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">fetch_from_feature_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_refs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/src/utils.html#fetch_from_feature_store"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.fetch_from_feature_store" title="Link to this definition"></a></dt>
+<dd><p>Fetches historical feature data from Feast feature store within a specified time range
+and entity constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>from_datetime</strong> (<em>str</em>) – Start datetime for the feature fetch in ISO format
+(e.g., ‘2023-01-01 00:00:00’).</p></li>
+<li><p><strong>to_datetime</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – End datetime for the feature fetch in ISO format.
+If None, fetches up to the latest available data.</p></li>
+<li><p><strong>feature_refs</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of feature references in the format
+‘feature_view_name:feature_name’.</p></li>
+<li><p><strong>entities</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Union</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>]</em><em>]</em>) – Dictionary of entity filters where:
+- key: entity column name
+- value: either a single entity value (str) or list of entity values (List[str])
+Defaults to None, which means no entity filtering.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>DataFrame containing the requested features with columns:</dt><dd><ul class="simple">
+<li><p>event_timestamp: timestamp of the feature values</p></li>
+<li><p>entity columns: as specified in the feature view</p></li>
+<li><p>feature columns: as requested in feature_refs</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_from_feature_store</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feature_refs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;raw_ohlcv:close&#39;</span><span class="p">,</span> <span class="s1">&#39;template_features:std_log_return_10_close&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entities</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;exchange&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;KuCoin&#39;</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">fetch_from_feature_store</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">from_datetime</span><span class="o">=</span><span class="s1">&#39;2024-12-01 00:00:00&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">to_datetime</span><span class="o">=</span><span class="s1">&#39;2024-12-10 00:00:00&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">feature_refs</span><span class="o">=</span><span class="n">feature_refs</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">entities</span><span class="o">=</span><span class="n">entities</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#to get all feature references in a feature view</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">FEAST_STORE</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feature_view</span> <span class="o">=</span> <span class="n">FEAST_STORE</span><span class="o">.</span><span class="n">get_feature_view</span><span class="p">(</span><span class="s2">&quot;raw_ohlcv&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feature_refs</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">feature_view</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">feature</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">feature_view</span><span class="o">.</span><span class="n">features</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entities</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;exchange&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;KuCoin&#39;</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">fetch_from_feature_store</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">from_datetime</span><span class="o">=</span><span class="s1">&#39;2024-12-01 00:00:00&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">to_datetime</span><span class="o">=</span><span class="s1">&#39;2024-12-10 00:00:00&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">feature_refs</span><span class="o">=</span><span class="n">feature_refs</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">entities</span><span class="o">=</span><span class="n">entities</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.get_max_timestamp_from_bq">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">get_max_timestamp_from_bq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#get_max_timestamp_from_bq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.get_max_timestamp_from_bq" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the maximum event_timestamp from a BigQuery table with optional filtering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table_ref</strong> (<em>str</em>) – The fully qualified BigQuery table reference in the format
+‘project_id.dataset_id.table_name’</p></li>
+<li><p><strong>entities</strong> (<em>Optional</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Union</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – Dictionary of column-value pairs
+for filtering. Values can be either a single string or a list of strings.
+Example: {‘exchange’: ‘KuCoin’, ‘symbol’: [‘BTC/USDT’, ‘ETH/USDT’]}.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The maximum event_timestamp found in the table. Returns None if</dt><dd><p>no results are found or if the table is empty.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[datetime]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">bigquery</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">BQ_CLIENT</span><span class="p">,</span> <span class="n">PROJECT_ID</span><span class="p">,</span> <span class="n">DATASET_ID</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_max_timestamp_from_bq</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table_ref</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROJECT_ID</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">DATASET_ID</span><span class="si">}</span><span class="s1">.ohlcv_daily&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entities</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;exchange&#39;</span><span class="p">:</span> <span class="s1">&#39;KuCoin&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;BTC/USDT&#39;</span><span class="p">,</span> <span class="s1">&#39;ETH/USDT&#39;</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">max_timestamp</span> <span class="o">=</span> <span class="n">get_max_timestamp_from_bq</span><span class="p">(</span><span class="n">table_ref</span><span class="p">,</span> <span class="n">entities</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">max_timestamp</span><span class="p">)</span>
+<span class="go">2024-01-07 00:00:00+00:00</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="example-creating-and-deploying-features">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Example: Creating and Deploying Features</a><a class="headerlink" href="#example-creating-and-deploying-features" title="Link to this heading"></a></h2>
+<p>This example demonstrates:</p>
+<ol class="arabic">
+<li><p>Create new feature module:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Get KuCoin raw price data from feature store</p></li>
+<li><p>Calculate 1 day log returns</p></li>
+<li><p>load new records / features to database</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Add feature view definition</p></li>
+<li><p>Deploy feature view</p></li>
+</ol>
+<section id="create-new-feature-module">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">1. Create New Feature Module:</a><a class="headerlink" href="#create-new-feature-module" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.cloud</span><span class="w"> </span><span class="kn">import</span> <span class="n">bigquery</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">ccxt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">BQ_CLIENT</span><span class="p">,</span> <span class="n">PROJECT_ID</span><span class="p">,</span> <span class="n">DATASET_ID</span><span class="p">,</span> <span class="n">PROD_DATASET_ID</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_max_timestamp_from_bq</span><span class="p">,</span> <span class="n">fetch_from_feature_store</span><span class="p">,</span> <span class="n">load_to_bq_table</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_log_return_feature_set</span><span class="p">(</span><span class="n">from_datetime</span><span class="p">,</span> <span class="n">exchange</span><span class="p">):</span>
+    <span class="c1">#feature references follow the format feature_view_name:feature_name</span>
+    <span class="n">feature_refs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;raw_ohlcv:open&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_ohlcv:high&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_ohlcv:low&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_ohlcv:close&#39;</span><span class="p">]</span>
+    <span class="n">entities</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;exchange&quot;</span><span class="p">:</span> <span class="n">exchange</span><span class="p">}</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">fetch_from_feature_store</span><span class="p">(</span>
+        <span class="n">from_datetime</span><span class="o">=</span><span class="n">from_datetime</span><span class="p">,</span>
+        <span class="n">to_datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">feature_refs</span><span class="o">=</span><span class="n">feature_refs</span><span class="p">,</span>
+        <span class="n">entities</span><span class="o">=</span><span class="n">entities</span>
+    <span class="p">)</span>
+
+    <span class="c1">#create 1 day log return price columns</span>
+    <span class="n">log_ret_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;log_ret_open&#39;</span><span class="p">,</span> <span class="s1">&#39;log_ret_high&#39;</span><span class="p">,</span> <span class="s1">&#39;log_ret_low&#39;</span><span class="p">,</span> <span class="s1">&#39;log_ret_close&#39;</span><span class="p">]</span>
+    <span class="n">price_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">,</span> <span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">log_ret_columns</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;symbol&#39;</span><span class="p">)[</span><span class="n">price_columns</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">price_columns</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">load_to_bq_table</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">table_ref</span><span class="o">=</span><span class="n">NEW_TABLE_REF</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;event_timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;exchange&#39;</span><span class="p">,</span> <span class="s1">&#39;symbol&#39;</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">NEW_TABLE_REF</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROJECT_ID</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">DATASET_ID</span><span class="si">}</span><span class="s1">.example_log_ret_features&#39;</span>
+
+    <span class="c1">#use below to get exchange name reference by ccxt</span>
+    <span class="n">exchange</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ccxt</span><span class="p">,</span> <span class="s1">&#39;kucoin&#39;</span><span class="p">)()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span> <span class="c1">#kucoin -&gt; KuCoin, kucoinfutures -&gt; KuCoin Futures</span>
+
+    <span class="c1">#Production ohlcv_daily table reference</span>
+    <span class="n">OHLCV_TABLE_REF</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">PROJECT_ID</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">PROD_DATASET_ID</span><span class="si">}</span><span class="s1">.ohlcv_daily&#39;</span>
+    <span class="n">latest_timestamp</span> <span class="o">=</span> <span class="n">get_max_timestamp_from_bq</span><span class="p">(</span><span class="n">OHLCV_TABLE_REF</span><span class="p">,</span> <span class="n">entities</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;exchange&quot;</span><span class="p">:</span><span class="n">exchange</span><span class="p">})</span>
+    <span class="c1">#&gt;&gt;datetime.datetime(2025, 1, 7, 0, 0, tzinfo=datetime.timezone.utc)</span>
+    <span class="n">from_datetime</span> <span class="o">=</span> <span class="p">(</span><span class="n">latest_timestamp</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+    <span class="c1">#&gt;&gt;&#39;2025-01-07 00:00:00+00:00&#39;</span>
+    <span class="n">calculate_log_return_feature_set</span><span class="p">(</span><span class="s1">&#39;2025-01-05 00:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;KuCoin&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="add-feature-view-definition">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">2. Add Feature View Definition</a><a class="headerlink" href="#add-feature-view-definition" title="Link to this heading"></a></h3>
+<p>Add new feature view to <code class="file docutils literal notranslate"><span class="pre">src/feast_repo/features_definitions.yaml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">feature_views</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">log_ret_ohlc</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">description</span>
+<span class="w">    </span><span class="nt">entities</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">symbol</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">exchange</span>
+<span class="w">    </span><span class="nt">ttl</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">days</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bigquery</span>
+<span class="w">      </span><span class="nt">table</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example_log_ret_features</span>
+<span class="w">      </span><span class="nt">production</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">features</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">log_ret_open</span>
+<span class="w">        </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float64</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">log_ret_high</span>
+<span class="w">        </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float64</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">log_ret_low</span>
+<span class="w">        </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float64</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">log_ret_close</span>
+<span class="w">        </span><span class="nt">dtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Float64</span>
+</pre></div>
+</div>
+</section>
+<section id="deploy-features">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">3. Deploy Features</a><a class="headerlink" href="#deploy-features" title="Link to this heading"></a></h3>
+<p>Run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>src.feast_repo.create_store
+</pre></div>
+</div>
+<p>Now the deployed features and feature view can be retrieved from feast feature store</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">feature_refs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;log_ret_ohlc:log_ret_open&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;log_ret_ohlc:log_ret_high&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;log_ret_ohlc:log_ret_low&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;log_ret_ohlc:log_ret_close&#39;</span>
+<span class="p">]</span>
+
+<span class="c1"># Example usage with fetch_from_feature_store</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">fetch_from_feature_store</span><span class="p">(</span>
+    <span class="n">from_datetime</span><span class="o">=</span><span class="s1">&#39;2025-01-05 00:00:00&#39;</span><span class="p">,</span>
+    <span class="n">feature_refs</span><span class="o">=</span><span class="n">feature_refs</span><span class="p">,</span>
+    <span class="n">entities</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;exchange&quot;</span><span class="p">:</span> <span class="s2">&quot;KuCoin&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="config.html" class="btn btn-neutral float-left" title="Config" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="generated/src.utils.create_bq_table_if_not_exist.html" class="btn btn-neutral float-right" title="src.utils.create_bq_table_if_not_exist" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, smokh.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
